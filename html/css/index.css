@@ -6,6 +6,7 @@ html, body {
     background-color: transparent !important;
     cursor: default;
     -webkit-font-smoothing: antialiased;
+    background-color: #fefefe;
 }
 
 ::-webkit-scrollbar {

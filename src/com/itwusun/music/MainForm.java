@@ -37,6 +37,10 @@ public class MainForm extends Application {
         webView.setMinHeight(670);
         webView.getEngine().load(defaultURL);
 
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setContentText(defaultURL+"\r\n"+webView.getEngine().getUserAgent());
+//        alert.show();
+
         webView.getEngine().getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
                 JSObject win = (JSObject) webView.getEngine().executeScript("window");
