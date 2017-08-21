@@ -1,0 +1,103 @@
+﻿
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>
+        音乐间谍
+    </title>
+
+    <link href="./lib/iview/iview.css" rel="stylesheet" />
+    <link href="./css/index.css" rel="stylesheet" />
+    <link href="./css/font-awesome.min.css" rel="stylesheet" />
+    <script src="./lib/vue/vue.min.js"></script>
+    <script src="./lib/vue/vue-router.min.js"></script>
+    <script src="./lib/vue/vue-resource.min.js"></script>
+    <script src="./lib/iview/iview.min.js"></script>
+    <script src="./lib/base64/base64.min.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <div id="uiHeader">
+        <i-button @click="iMusic.closeForm()">
+            <i class="fa fa-close" style="font-size: 14px;"></i>
+        </i-button>
+    </div>
+    <i-menu theme="light" id="navLeft">
+        <Menu-group title="推荐">
+            <Menu-item name="mFind">
+                <i class="fa fa-modx" style="font-size: 15px;"></i>发现音乐
+            </Menu-item>
+            <Menu-item name="mFM">
+                <Icon type="radio-waves"></Icon>私人FM
+            </Menu-item>
+            <Menu-item name="mPlay">
+                <i class="ivu-icon ivu-icon-social-youtube-outline"></i>正在播放
+            </Menu-item>
+            <Menu-item name="mFirend">
+                <Icon type="person-stalker"></Icon>朋友
+            </Menu-item>
+        </Menu-group>
+        <Menu-group title="我的音乐">
+            <Menu-item name="mLocal">
+                <i class="fa fa-music"></i>本地音乐
+            </Menu-item>
+            <Menu-item name="mDown">
+                <i class="fa fa-download"></i>下载管理
+            </Menu-item>
+            <Menu-item name="mArtist">
+                <i class="fa fa-user-md"></i>我的歌手
+            </Menu-item>
+            <Menu-item name="mRadio">
+                <i class="fa fa-podcast"></i>我的电台
+            </Menu-item>
+        </Menu-group>
+        <Submenu name="3" class="playlist">
+            <template slot="title">
+                播放列表
+            </template>
+            <Menu-item name="3-1">
+                <i class="fa fa-file-audio-o"></i>播放列表1
+            </Menu-item>
+            <Menu-item name="3-2">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-3">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-4">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-5">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-6">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-7">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-8">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+        </Submenu>
+    </i-menu>
+
+    <div id="uiTime"></div>
+    <div id="uiFooter"></div>
+</div>
+    
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+
+        }
+    });
+</script>
+</body>
+</html>
