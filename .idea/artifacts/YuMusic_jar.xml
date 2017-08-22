@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="YuMusic:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/YuMusic_jar</output-path>
+    <root id="archive" name="YuMusic.jar">
+      <element id="module-output" name="YuMusic" />
+    </root>
+  </artifact>
+</component>
