@@ -1,17 +1,20 @@
 package com.itwusun.music;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import netscape.javascript.*;
 
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -23,11 +26,40 @@ public class MainForm extends Application {
         primaryStage.show();
     }
 
-    public void closeForm(){
-        Platform.exit();
+    public class JsBridge {
+        private Stage stage;
+        private boolean mouseDragFlag = false;
+
+        JsBridge(Stage st){
+            this.stage = st;
+        }
+
+        public void closeForm(){
+            this.stage.close();
+        }
+
+        public void maxForm(){
+            this.stage.setMaximized(!this.stage.isMaximized());
+        }
+
+        public void minForm(){
+            this.stage.setIconified(true);
+        }
+
+        public void dragEnable(){
+            this.mouseDragFlag = true;
+        }
+
+        public void dragDisable(){
+            this.mouseDragFlag = false;
+        }
     }
 
     private WebView webView = new WebView();
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private JsBridge jsBridge;
+
     private void init(Stage primaryStage) {
         String defaultURL = System.getProperty("user.dir");
         System.out.println(defaultURL);
@@ -35,26 +67,42 @@ public class MainForm extends Application {
         defaultURL = "file:///" + path.toString();
         webView.setMinWidth(1120);
         webView.setMinHeight(670);
-        webView.getEngine().load(defaultURL);
-
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setContentText(defaultURL+"\r\n"+webView.getEngine().getUserAgent());
-//        alert.show();
-
-        webView.getEngine().getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
+        final WebEngine webEngine = webView.getEngine();
+        webEngine.load(defaultURL);
+        primaryStage.setScene(new Scene(webView));
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.setTitle("鱼声音乐");
+        primaryStage.getIcons().add(new Image(MainForm.class.getClassLoader().getResourceAsStream("16.png")));
+        primaryStage.getIcons().add(new Image(MainForm.class.getClassLoader().getResourceAsStream("32.png")));
+        primaryStage.getIcons().add(new Image(MainForm.class.getClassLoader().getResourceAsStream("64.png")));
+        primaryStage.getIcons().add(new Image(MainForm.class.getClassLoader().getResourceAsStream("100.png")));
+        jsBridge = new JsBridge(primaryStage);
+        webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
-                JSObject win = (JSObject) webView.getEngine().executeScript("window");
-                win.setMember("iMusic", new MainForm());
+                JSObject win = (JSObject) webEngine.executeScript("window");
+                win.setMember("iMusic", jsBridge);
             }
         });
 
-        JSObject window = (JSObject) webView.getEngine().executeScript("window");
-        window.setMember("iMusic", new MainForm());
+        webView.setOnMousePressed((MouseEvent event) -> {
+            event.consume();
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
 
-        primaryStage.setScene(new Scene(webView));
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        webView.setOnMouseDragged((MouseEvent event) -> {
+            if (jsBridge.mouseDragFlag){
+                event.consume();
+                primaryStage.setX(event.getScreenX() - xOffset);
+                if (event.getScreenY() - yOffset < 0) {
+                    primaryStage.setY(0);
+                }
+                else {
+                    primaryStage.setY(event.getScreenY() - yOffset);
+                }
+            }
+        });
     }
-
 
     public static void main(String[] args) {
         launch(args);

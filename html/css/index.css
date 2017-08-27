@@ -3,14 +3,15 @@
 html, body {
     -webkit-user-select: none;
     padding: 0;
-    background-color: transparent !important;
     cursor: default;
     -webkit-font-smoothing: antialiased;
-    background-color: #fefefe;
+    background-color: #FFF;
+    overflow: hidden;
+    font-family: "Microsoft YaHei","微软雅黑","Helvetica Neue",Helvetica,sans-serif;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
     background-color: #f7f7ff !important;
 }
 
@@ -23,9 +24,11 @@ html, body {
     background-color: #cfcfd1
 }
 
-::-webkit-scrollbar {
-    width: 8px;
-    background-color: transparent !important;
+#app{
+    overflow: hidden;
+    -webkit-box-shadow: 0 2px 10px #333333;
+    width: 100%;
+    height: 100%;
 }
 
 #uiHeader {
@@ -57,8 +60,8 @@ html, body {
     position: absolute;
     bottom: 65px;
     width: 100%;
-    background: #eee;
-    border-bottom: 1px solid #D7DCD6;
+    background: #E8E8E9;
+    cursor: pointer;
 }
 
 #uiFooter {
@@ -68,3 +71,132 @@ html, body {
     bottom: 0;
     width: 100%;
 }
+
+#ui-sys-commands {
+    word-break: keep-all;
+    white-space: nowrap;
+    transition: all ease-in-out 0.3s;
+    display: block;
+    width: 90px;
+    height: 58px;
+    top:0;
+    right: 0;
+    position: absolute;
+    overflow: hidden;
+    padding-right: 5px;
+}
+
+#ui-sys-commands span {
+    height: 16px;
+    line-height: 16px;
+    width: 16px;
+    text-align: center;
+    vertical-align: middle;
+    color: #D0D1DA;
+    display: block;
+    opacity: 1;
+    transition: all ease-in-out 0.3s;
+    float: left;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 21px 6px;
+}
+
+#ui-sys-commands span:hover {
+    color: #FFF;
+}
+
+#ui-sys-commands span:active {
+    color: #FFF;
+}
+
+.ui-toolbar {
+    height: 50px;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    padding: 0 5px;
+}
+
+#nav-left {
+    position: absolute;
+    top: 58px;
+    left: 8px;
+    bottom: 70px;
+    background: #f7f7ff;
+    width: 250px !important;
+}
+
+#ui-main {
+    position: absolute;
+    top: 58px;
+    left: 258px;
+    bottom: 70px;
+    background: #fafafa;
+    right: 8px;
+}
+
+#jquery_jplayer{
+    height: 0;
+}
+
+.jp-seek-bar{
+    position: relative;
+    top:0;
+    left: 0;
+    height: 5px;
+    background-color: #D7DCE0;
+}
+
+.jp-play-bar{
+    position: relative;
+    top:0;
+    left: 0;
+    height: 5px;
+    background-color: #F7822A;
+}
+
+.player-controls{
+    width: 200px;
+    height: 65px;
+    display: block;
+    margin: 0 auto;
+    padding: 7px;
+}
+
+.player-controls a i{
+    font-size: 31px;
+    width: 51px;
+    height: 51px;
+    display: inline-block;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 50%;
+}
+
+.jp-play i, .jp-pause i{
+     background: #FF822A;
+     color: #fff;
+ }
+
+.jp-play i:hover, .jp-pause i:hover{
+    background: #F7822A;
+}
+
+.jp-next i, .jp-previous i{
+    color: #FF822A;
+    margin: 0 5px;
+}
+
+.jp-next i:hover, .jp-previous i:hover{
+    color: #F7822A;
+}
+
+.play-info{
+    width: 40%;
+    height: 65px;
+}
+
+
+
