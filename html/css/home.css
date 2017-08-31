@@ -1,12 +1,10 @@
-﻿/*滚动条样式*/
 
 html, body {
     -webkit-user-select: none;
     padding: 0;
     cursor: default;
     -webkit-font-smoothing: antialiased;
-    background-color: #FFF;
-    overflow: hidden;
+    background-color: transparent !important;
     font-family: "Microsoft YaHei","微软雅黑","Helvetica Neue",Helvetica,sans-serif;
 }
 
@@ -24,52 +22,18 @@ html, body {
     background-color: #cfcfd1
 }
 
-#app{
+#ui-shadow-box {
     overflow: hidden;
     -webkit-box-shadow: 0 2px 10px #333333;
     width: 100%;
     height: 100%;
+    background-color: #FFFFFF;
 }
 
-#uiHeader {
+#ui-sys-bar {
     width: 100%;
     height: 58px;
     background: #8D97B0;
-}
-
-#navLeft {
-    display: block;
-    position: absolute;
-    top: 58px;
-    left: 0;
-    bottom: 70px;
-    width: 270px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background: #f7f7ff;
-    border-right: 1px solid #D7DCD6;
-}
-
-.ivu-menu-vertical.ivu-menu-light:after {
-    width: 0 !important;
-}
-
-#uiTime {
-    height: 5px;
-    display: block;
-    position: absolute;
-    bottom: 65px;
-    width: 100%;
-    background: #E8E8E9;
-    cursor: pointer;
-}
-
-#uiFooter {
-    height: 65px;
-    display: block;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
 }
 
 #ui-sys-commands {
@@ -79,9 +43,7 @@ html, body {
     display: block;
     width: 90px;
     height: 58px;
-    top:0;
-    right: 0;
-    position: absolute;
+    float: right;
     overflow: hidden;
     padding-right: 5px;
 }
@@ -110,32 +72,44 @@ html, body {
     color: #FFF;
 }
 
-.ui-toolbar {
-    height: 50px;
-    position: fixed;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    padding: 0 5px;
-}
-
-#nav-left {
+#navLeft {
+    display: block;
     position: absolute;
-    top: 58px;
+    top: 66px;
     left: 8px;
-    bottom: 70px;
+    bottom: 78px;
+    width: 270px;
+    overflow-y: auto;
+    overflow-x: hidden;
     background: #f7f7ff;
-    width: 250px !important;
+    border-right: 1px solid #D7DCD6;
 }
 
-#ui-main {
-    position: absolute;
-    top: 58px;
-    left: 258px;
-    bottom: 70px;
-    background: #fafafa;
-    right: 8px;
+.ivu-menu-vertical.ivu-menu-light:after {
+    width: 0 !important;
 }
+
+#uiTime {
+    height: 5px;
+    display: block;
+    position: absolute;
+    bottom: 73px;
+    left: 8px;
+    right: 8px;
+    background: #E8E8E9;
+    cursor: pointer;
+}
+
+#uiFooter {
+    height: 65px;
+    display: block;
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    background-color: #FFF;
+}
+
 
 #jquery_jplayer{
     height: 0;
@@ -176,9 +150,9 @@ html, body {
 }
 
 .jp-play i, .jp-pause i{
-     background: #FF822A;
-     color: #fff;
- }
+    background: #FF822A;
+    color: #fff;
+}
 
 .jp-play i:hover, .jp-pause i:hover{
     background: #F7822A;
@@ -197,6 +171,3 @@ html, body {
     width: 40%;
     height: 65px;
 }
-
-
-

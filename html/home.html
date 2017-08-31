@@ -1,0 +1,282 @@
+<html onmousedown="resizeWindow(event)" onmousemove="setCursor(event)">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AnyListen</title>
+    <link href="./lib/iview/iview.css" rel="stylesheet" />
+    <link href="./css/home.css" rel="stylesheet" />
+    <link href="./css/font-awesome.min.css" rel="stylesheet" />
+
+    <script>
+        var isMouseEnter = false;
+        window.onload = function () {
+            setState('nor');
+        };
+
+        function setState(state) {
+            if (state === "max") {//设置最大化和还原按钮状态和阴影显示
+                document.body.style.margin = '0';
+                document.body.style.overflow = 'hidden';
+                document.getElementById("navLeft").style.top = "58px";
+                document.getElementById("navLeft").style.left = "0";
+                document.getElementById("navLeft").style.bottom = "70px";
+
+//                document.getElementById("ui-main").style.top = "50px";
+//                document.getElementById("ui-main").style.left = "200px";
+//                document.getElementById("ui-main").style.right = "0";
+//                document.getElementById("ui-main").style.bottom = "62px";
+
+                document.getElementById("uiTime").style.left = "0";
+                document.getElementById("uiTime").style.right = "0";
+                document.getElementById("uiTime").style.bottom = "65px";
+
+                document.getElementById("uiFooter").style.left = "0";
+                document.getElementById("uiFooter").style.right = "0";
+                document.getElementById("uiFooter").style.bottom = "0";
+            }
+            else if (state === "nor") {
+                document.body.style.margin = '8px';
+                document.body.style.overflow = '';
+                document.getElementById("navLeft").style.top = "66px";
+                document.getElementById("navLeft").style.left = "8px";
+                document.getElementById("navLeft").style.bottom = "78px";
+
+//                document.getElementById("ui-main").style.top = "58px";
+//                document.getElementById("ui-main").style.left = "208px";
+//                document.getElementById("ui-main").style.right = "8px";
+//                document.getElementById("ui-main").style.bottom = "70px";
+
+                document.getElementById("uiTime").style.left = "8px";
+                document.getElementById("uiTime").style.right = "8px";
+                document.getElementById("uiTime").style.bottom = "73px";
+
+                document.getElementById("uiFooter").style.left = "8px";
+                document.getElementById("uiFooter").style.right = "8px";
+                document.getElementById("uiFooter").style.bottom = "8px";
+            }
+        }
+
+        function resizeWindow(e) {//调整窗体大小的方法
+            if (!isMouseEnter) {
+                return;
+            }
+            var body = getComputedStyle(document.body, null);
+            if (body.marginTop.replace("px", "") > e.y && (Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                ResizeWindow("righttop");
+            }
+            else if (body.marginTop.replace("px", "") > e.y && body.marginLeft.replace("px", "") > e.x) {
+                ResizeWindow("lefttop");
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y && body.marginLeft.replace("px", "") > e.x) {
+                ResizeWindow("leftbottom");
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y && (Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                ResizeWindow("rightbottom");
+            }
+            else if (body.marginTop.replace("px", "") > e.y) {
+                ResizeWindow("top");
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y) {
+                ResizeWindow("bottom");
+            }
+            else if (body.marginLeft.replace("px", "") > e.x) {
+                ResizeWindow("left");
+            }
+            else if ((Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                ResizeWindow("right");
+            }
+        }
+        //设置四周的鼠标样式
+        function setCursor(e) {
+            var body = getComputedStyle(document.body, null);
+            if (body.marginTop.replace("px", "") > e.y && (Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "ne-resize";
+            }
+            else if (body.marginTop.replace("px", "") > e.y && body.marginLeft.replace("px", "") > e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "nw-resize";
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y && body.marginLeft.replace("px", "") > e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "sw-resize";
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y && (Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "se-resize";
+            }
+            else if (body.marginTop.replace("px", "") > e.y) {
+                document.getElementsByTagName("html")[0].style.cursor = "n-resize";
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y) {
+                document.getElementsByTagName("html")[0].style.cursor = "s-resize";
+            }
+            else if (body.marginLeft.replace("px", "") > e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "w-resize";
+            }
+            else if ((Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "e-resize";
+            } else {
+                //document.getElementsByTagName("html")[0].style.cursor = "auto";
+            }
+        }
+    </script>
+
+</head>
+<!--设置margin才能显示阴影-->
+<body style="margin:8px;">
+<div id="ui-shadow-box">
+    <div id="ui-sys-bar" onmousedown="if(event.button !== 2){ iMusic.dragEnable() }" onmouseup="iMusic.dragDisable()" ondblclick="iMusic.maxForm()">
+        <div id="ui-sys-commands">
+            <span onclick="iMusic.minForm();" onmousedown="event.stopPropagation()">
+                <i class="ivu-icon ivu-icon-minus-round"></i>
+            </span>
+            <span onclick="iMusic.maxForm()" onmousedown="event.stopPropagation()">
+                <i class="fa fa-square-o"></i>
+            </span>
+            <span onclick="iMusic.closeForm()" onmousedown="event.stopPropagation()">
+                <i class="ivu-icon ivu-icon-close-round"></i>
+            </span>
+        </div>
+    </div>
+
+    <i-menu theme="light" id="navLeft">
+        <Menu-group title="推荐">
+            <Menu-item name="mFind">
+                <i class="fa fa-modx" style="font-size: 15px;"></i>发现音乐
+            </Menu-item>
+            <Menu-item name="mFM">
+                <Icon type="radio-waves"></Icon>私人FM
+            </Menu-item>
+            <Menu-item name="mPlay">
+                <i class="ivu-icon ivu-icon-social-youtube-outline"></i>正在播放
+            </Menu-item>
+            <Menu-item name="mFirend">
+                <Icon type="person-stalker"></Icon>朋友
+            </Menu-item>
+        </Menu-group>
+        <Menu-group title="我的音乐">
+            <Menu-item name="mLocal">
+                <i class="fa fa-music"></i>本地音乐
+            </Menu-item>
+            <Menu-item name="mDown">
+                <i class="fa fa-download"></i>下载管理
+            </Menu-item>
+            <Menu-item name="mArtist">
+                <i class="fa fa-user-md"></i>我的歌手
+            </Menu-item>
+            <Menu-item name="mRadio">
+                <i class="fa fa-podcast"></i>我的电台
+            </Menu-item>
+        </Menu-group>
+        <Submenu name="3" class="playlist">
+            <template slot="title">
+                播放列表
+            </template>
+            <Menu-item name="3-1">
+                <i class="fa fa-file-audio-o"></i>播放列表1
+            </Menu-item>
+            <Menu-item name="3-2">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-3">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-4">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-5">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-6">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-7">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+            <Menu-item name="3-8">
+                <i class="fa fa-file-audio-o"></i>播放列表2
+            </Menu-item>
+        </Submenu>
+    </i-menu>
+
+    <div id="jp_container">
+        <div id="uiTime" class="jp-progress">
+            <div class="jp-seek-bar">
+                <div class="jp-play-bar"></div>
+            </div>
+        </div>
+        <div id="uiFooter">
+            <div class="play-info" style="float: left;">
+                <div style="display: inline-block">
+                    <img style="width: 65px;height: 65px;" src="http://p4.music.126.net/_XoSrxY3z6TOA7EecH2Wcw==/18510278255510126.jpg"/>
+                </div>
+                <div style="display: inline-block;height: 65px;vertical-align: top;padding-left: 10px;">
+                    <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+                    <div style="font-size: 14px;color: #3E3E3E;line-height: 25px;">爱你的自由</div>
+                    <div style="font-size: 14px;color: #3E3E3E;line-height: 25px;">颜子超级童颜</div>
+                </div>
+            </div>
+
+            <div class="player-controls">
+                <a class="jp-previous">
+                    <i class="ivu-icon ivu-icon-ios-skipbackward"></i>
+                </a>
+                <a class="jp-play">
+                    <i class="ivu-icon ivu-icon-ios-play"></i>
+                </a>
+                <a class="jp-pause">
+                    <i class="ivu-icon ivu-icon-ios-pause"></i>
+                </a>
+                <a class="jp-next">
+                    <i class="ivu-icon ivu-icon-ios-skipforward"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="jquery_jplayer"></div>
+
+</div>
+<script src="./lib/jplayer/jquery-1.9.1.min.js"></script>
+<script src="./lib/jplayer/jquery.jplayer.min.js"></script>
+<script src="./lib/jplayer/jplayer.playlist.min.js"></script>
+<script src="./lib/vue/vue.min.js"></script>
+<script src="./lib/vue/vue-router.min.js"></script>
+<script src="./lib/vue/vue-resource.min.js"></script>
+<script src="./lib/iview/iview.min.js"></script>
+<script src="./lib/base64/base64.min.js"></script>
+<script>
+    var myPlaylist;
+    $(document).ready(function() {
+        myPlaylist = new jPlayerPlaylist({
+            jPlayer: "#jquery_jplayer",
+            cssSelectorAncestor: "#jp_container"
+        }, [], {
+            ready: function () {
+                $(this).jPlayer("setMedia", {
+                    title: "爱你的自由",
+                    artist: "颜子超级童颜",
+                    mp3: "http://vip.itwusun.com/music/ymusic/wy_320_473964639.mp3?sign=2cc216728dee58b6c1c985c48785fb8b",
+                    poster: "http://p4.music.126.net/_XoSrxY3z6TOA7EecH2Wcw==/18510278255510126.jpg",
+                    lrc: "http://vip.itwusun.com/music/ymusic/wy_320_473964639.lrc?sign=e535d654c4b4c3cd7090b3f74f613261"
+                });
+            },
+            solution: "html",
+            preload: "auto",
+            supplied: "mp3,m4a,oga,wav",
+            useStateClassSkin: true,
+            autoBlur: false,
+            smoothPlayBar: true,
+            keyEnabled: true,
+            remainingDuration: true
+        });
+    });
+
+    new Vue({
+        el: "#ui-shadow-box",
+        data: {
+
+        }
+    });
+
+</script>
+</body>
+</html>
