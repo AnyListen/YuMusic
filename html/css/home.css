@@ -81,8 +81,17 @@ html, body {
     width: 270px;
     overflow-y: auto;
     overflow-x: hidden;
-    background: #f7f7ff;
+    background: #f9f9f9;
     border-right: 1px solid #D7DCD6;
+}
+
+#navLeft .ivu-menu-item i{
+    font-size: 16px;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 8px;
 }
 
 .ivu-menu-vertical.ivu-menu-light:after {
@@ -128,7 +137,7 @@ html, body {
     top:0;
     left: 0;
     height: 5px;
-    background-color: #F7822A;
+    background-color: #FE5E00;
 }
 
 .player-controls{
@@ -150,7 +159,7 @@ html, body {
 }
 
 .jp-play i, .jp-pause i{
-    background: #FF822A;
+    background: #FE5E00;
     color: #fff;
 }
 
@@ -159,7 +168,7 @@ html, body {
 }
 
 .jp-next i, .jp-previous i{
-    color: #FF822A;
+    color: #FE5E00;
     margin: 0 5px;
 }
 
@@ -170,4 +179,32 @@ html, body {
 .play-info{
     width: 40%;
     height: 65px;
+}
+
+.ivu-menu-vertical .ivu-menu-item-group-title{
+    height: 36px;
+    line-height: 36px;
+    padding-left: 8px;
+    color: #7D7D7D;
+}
+
+.ivu-menu-submenu-title{
+    padding: 8px !important;
+    color: #7D7D7D;
+}
+
+.ivu-menu-submenu-title:hover{
+    background: none !important;
+}
+
+.ivu-menu-item{
+    padding: 8px 22px !important;
+    font-size: 14px;
+    color: #5C5C5C;
+}
+
+.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
+    background: #ECECEC;
+    color: #000;
+
 }
