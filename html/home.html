@@ -9,51 +9,15 @@
     <link href="./css/font-awesome.min.css" rel="stylesheet" />
 
     <script>
-        var isMouseEnter = false;
-        window.onload = function () {
-            setState('nor');
-        };
-
+        let isMouseEnter = false;
         function setState(state) {
             if (state === "max") {//设置最大化和还原按钮状态和阴影显示
                 document.body.style.margin = '0';
                 document.body.style.overflow = 'hidden';
-                document.getElementById("navLeft").style.top = "58px";
-                document.getElementById("navLeft").style.left = "0";
-                document.getElementById("navLeft").style.bottom = "70px";
-
-//                document.getElementById("ui-main").style.top = "50px";
-//                document.getElementById("ui-main").style.left = "200px";
-//                document.getElementById("ui-main").style.right = "0";
-//                document.getElementById("ui-main").style.bottom = "62px";
-
-                document.getElementById("uiTime").style.left = "0";
-                document.getElementById("uiTime").style.right = "0";
-                document.getElementById("uiTime").style.bottom = "65px";
-
-                document.getElementById("uiFooter").style.left = "0";
-                document.getElementById("uiFooter").style.right = "0";
-                document.getElementById("uiFooter").style.bottom = "0";
             }
             else if (state === "nor") {
                 document.body.style.margin = '8px';
                 document.body.style.overflow = '';
-                document.getElementById("navLeft").style.top = "66px";
-                document.getElementById("navLeft").style.left = "8px";
-                document.getElementById("navLeft").style.bottom = "78px";
-
-//                document.getElementById("ui-main").style.top = "58px";
-//                document.getElementById("ui-main").style.left = "208px";
-//                document.getElementById("ui-main").style.right = "8px";
-//                document.getElementById("ui-main").style.bottom = "70px";
-
-                document.getElementById("uiTime").style.left = "8px";
-                document.getElementById("uiTime").style.right = "8px";
-                document.getElementById("uiTime").style.bottom = "73px";
-
-                document.getElementById("uiFooter").style.left = "8px";
-                document.getElementById("uiFooter").style.right = "8px";
-                document.getElementById("uiFooter").style.bottom = "8px";
             }
         }
 
@@ -87,7 +51,7 @@
                 ResizeWindow("right");
             }
         }
-        //设置四周的鼠标样式
+
         function setCursor(e) {
             var body = getComputedStyle(document.body, null);
             if (body.marginTop.replace("px", "") > e.y && (Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
@@ -203,13 +167,17 @@
         <div id="uiFooter">
             <div class="play-info" style="float: left;">
                 <div style="display: inline-block">
-                    <img style="width: 65px;height: 65px;" src="http://p4.music.126.net/_XoSrxY3z6TOA7EecH2Wcw==/18510278255510126.jpg"/>
+                    <img style="width: 65px;height: 65px;" src="http://pic.xiami.net/images/album/img58/613758/6137581427613758.jpg"/>
                 </div>
                 <div style="display: inline-block;height: 65px;vertical-align: top;padding-left: 10px;">
-                    <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
-                    <div style="font-size: 14px;color: #3E3E3E;line-height: 25px;">爱你的自由</div>
-                    <div style="font-size: 14px;color: #3E3E3E;line-height: 25px;">颜子超级童颜</div>
+                    <div style="line-height: 18px"><span class="jp-current-time"></span></div>
+                    <div style="font-size: 16px;color: #333F48;line-height: 26px;">Little Star</div>
+                    <div style="font-size: 12px;color: #333F48;line-height: 20px;">Rune Foshaug</div>
                 </div>
+            </div>
+
+            <div class="play-control" style="float: right;">
+                <div style="line-height: 18px;display:inline-block;position: absolute;right: 10px;"><span class="jp-duration"></span></div>
             </div>
 
             <div class="player-controls">
@@ -217,7 +185,7 @@
                     <i class="ivu-icon ivu-icon-ios-skipbackward"></i>
                 </a>
                 <a class="jp-play">
-                    <i class="ivu-icon ivu-icon-ios-play"></i>
+                    <i class="ivu-icon ivu-icon-play" style="padding-left:5px;"></i>
                 </a>
                 <a class="jp-pause">
                     <i class="ivu-icon ivu-icon-ios-pause"></i>
@@ -241,7 +209,9 @@
 <script src="./lib/iview/iview.min.js"></script>
 <script src="./lib/base64/base64.min.js"></script>
 <script>
-    var myPlaylist;
+    let myPlaylist;
+    $.jPlayer.timeFormat.padMin = true;
+    $.jPlayer.timeFormat.padSec = true;
     $(document).ready(function() {
         myPlaylist = new jPlayerPlaylist({
             jPlayer: "#jquery_jplayer",
@@ -251,9 +221,8 @@
                 $(this).jPlayer("setMedia", {
                     title: "爱你的自由",
                     artist: "颜子超级童颜",
-                    mp3: "http://vip.itwusun.com/music/ymusic/wy_320_473964639.mp3?sign=2cc216728dee58b6c1c985c48785fb8b",
-                    poster: "http://p4.music.126.net/_XoSrxY3z6TOA7EecH2Wcw==/18510278255510126.jpg",
-                    lrc: "http://vip.itwusun.com/music/ymusic/wy_320_473964639.lrc?sign=e535d654c4b4c3cd7090b3f74f613261"
+                    mp3: "http://vip.itwusun.com/music/ymusic/xm_320_1774113736.mp3?sign=da00f7a1b5307f26ac51c05f1896d190",
+                    poster: "http://pic.xiami.net/images/album/img58/613758/6137581427613758.jpg"
                 });
             },
             solution: "html",
@@ -262,8 +231,7 @@
             useStateClassSkin: true,
             autoBlur: false,
             smoothPlayBar: true,
-            keyEnabled: true,
-            remainingDuration: true
+            keyEnabled: true
         });
     });
 

@@ -8,6 +8,18 @@ html, body {
     font-family: "Microsoft YaHei","微软雅黑","Helvetica Neue",Helvetica,sans-serif;
 }
 
+html{
+    height: 100%;
+}
+
+body{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 ::-webkit-scrollbar {
     width: 6px;
     background-color: #f7f7ff !important;
@@ -75,14 +87,15 @@ html, body {
 #navLeft {
     display: block;
     position: absolute;
-    top: 66px;
-    left: 8px;
-    bottom: 78px;
-    width: 270px;
+    top: 58px;
+    left: 0;
+    bottom: 70px;
+    width: 240px !important;
     overflow-y: auto;
     overflow-x: hidden;
     background: #f9f9f9;
     border-right: 1px solid #D7DCD6;
+    padding-bottom: 6px;
 }
 
 #navLeft .ivu-menu-item i{
@@ -94,6 +107,17 @@ html, body {
     margin-right: 8px;
 }
 
+#ui-content{
+    display: block;
+    position: absolute;
+    top: 58px;
+    left: 240px;
+    bottom: 70px;
+    right: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .ivu-menu-vertical.ivu-menu-light:after {
     width: 0 !important;
 }
@@ -102,9 +126,9 @@ html, body {
     height: 5px;
     display: block;
     position: absolute;
-    bottom: 73px;
-    left: 8px;
-    right: 8px;
+    bottom: 65px;
+    left: 0;
+    right: 0;
     background: #E8E8E9;
     cursor: pointer;
 }
@@ -113,9 +137,9 @@ html, body {
     height: 65px;
     display: block;
     position: absolute;
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: #FFF;
 }
 
@@ -134,10 +158,11 @@ html, body {
 
 .jp-play-bar{
     position: relative;
-    top:0;
+    top:-5px;
     left: 0;
     height: 5px;
     background-color: #FE5E00;
+    z-index: 100;
 }
 
 .player-controls{
@@ -176,7 +201,7 @@ html, body {
     color: #F7822A;
 }
 
-.play-info{
+.play-info,.play-control{
     width: 40%;
     height: 65px;
 }
@@ -198,7 +223,7 @@ html, body {
 }
 
 .ivu-menu-item{
-    padding: 8px 22px !important;
+    padding: 6px 22px !important;
     font-size: 14px;
     color: #5C5C5C;
 }
@@ -206,5 +231,4 @@ html, body {
 .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
     background: #ECECEC;
     color: #000;
-
 }

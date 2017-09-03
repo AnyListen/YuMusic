@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AnyListen</title>
+    <link href="./lib/iview/iview.css" rel="stylesheet" />
+    <link href="./css/home.css" rel="stylesheet" />
+    <link href="./css/font-awesome.min.css" rel="stylesheet" />
+
+    <script>
+        const isMouseEnter = false;
+
+        function setState(state) {
+            if (state === "max") {//设置最大化和还原按钮状态和阴影显示
+                document.body.style.margin = '0';
+                document.body.style.overflow = 'hidden';
+            }
+            else if (state === "nor") {
+                document.body.style.margin = '8px';
+                document.body.style.overflow = '';
+            }
+        }
+
+        function resizeWindow(e) {//调整窗体大小的方法
+            if (!isMouseEnter) {
+                return;
+            }
+            var body = getComputedStyle(document.body, null);
+            if (body.marginTop.replace("px", "") > e.y && (Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                ResizeWindow("righttop");
+            }
+            else if (body.marginTop.replace("px", "") > e.y && body.marginLeft.replace("px", "") > e.x) {
+                ResizeWindow("lefttop");
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y && body.marginLeft.replace("px", "") > e.x) {
+                ResizeWindow("leftbottom");
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y && (Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                ResizeWindow("rightbottom");
+            }
+            else if (body.marginTop.replace("px", "") > e.y) {
+                ResizeWindow("top");
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y) {
+                ResizeWindow("bottom");
+            }
+            else if (body.marginLeft.replace("px", "") > e.x) {
+                ResizeWindow("left");
+            }
+            else if ((Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                ResizeWindow("right");
+            }
+        }
+
+        function setCursor(e) {
+            var body = getComputedStyle(document.body, null);
+            if (body.marginTop.replace("px", "") > e.y && (Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "ne-resize";
+            }
+            else if (body.marginTop.replace("px", "") > e.y && body.marginLeft.replace("px", "") > e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "nw-resize";
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y && body.marginLeft.replace("px", "") > e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "sw-resize";
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y && (Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "se-resize";
+            }
+            else if (body.marginTop.replace("px", "") > e.y) {
+                document.getElementsByTagName("html")[0].style.cursor = "n-resize";
+            }
+            else if ((Number(body.marginTop.replace("px", "")) + Number(body.height.replace("px", ""))) < e.y) {
+                document.getElementsByTagName("html")[0].style.cursor = "s-resize";
+            }
+            else if (body.marginLeft.replace("px", "") > e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "w-resize";
+            }
+            else if ((Number(body.marginLeft.replace("px", "")) + Number(body.width.replace("px", ""))) < e.x) {
+                document.getElementsByTagName("html")[0].style.cursor = "e-resize";
+            } else {
+                //document.getElementsByTagName("html")[0].style.cursor = "auto";
+            }
+        }
+    </script>
+</head>
+<body style="margin:8px;">
+    <div id="ui-shadow-box">
+        <v-header></v-header>
+        <v-left></v-left>
+        <div id="ui-content">
+            <transition name="component-fade" mode="out-in">
+                <keep-alive>
+                    <router-view></router-view>
+                </keep-alive>
+            </transition>
+        </div>
+        <v-footer></v-footer>
+    </div>
+    <script data-main="app" src="./lib/require/require.js" ></script>
+</body>
+</html>

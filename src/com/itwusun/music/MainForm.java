@@ -1,6 +1,8 @@
 package com.itwusun.music;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -91,7 +93,7 @@ public class MainForm extends Application {
     private void init(Stage primaryStage) {
         String defaultURL = System.getProperty("user.dir");
         System.out.println(defaultURL);
-        Path path = Paths.get(defaultURL, "html", "home.html");
+        Path path = Paths.get(defaultURL, "html", "index.html");
         defaultURL = "file:///" + path.toString();
         webView.setMinWidth(1120);
         webView.setMinHeight(670);
@@ -114,6 +116,8 @@ public class MainForm extends Application {
                 win.setMember("iMusic", jsBridge);
             }
         });
+
+        webEngine.getLoadWorker().exceptionProperty().addListener((ov, t, t1) -> System.out.println("Received exception: "+t1.getMessage()));
 
         webEngine.documentProperty().addListener((ov, oldState, newState) -> {
             try {
