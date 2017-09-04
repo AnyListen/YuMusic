@@ -16,12 +16,18 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import jodd.io.FileUtil;
 import netscape.javascript.*;
 
+import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.rmi.server.ExportException;
+
+import static javafx.concurrent.Worker.State.FAILED;
+import static javafx.concurrent.Worker.State.SUCCEEDED;
 
 public class MainForm extends Application {
 
@@ -40,23 +46,22 @@ public class MainForm extends Application {
         private double oriWidth = 0;
         private double oriHeight = 0;
 
-        JsBridge(Stage st){
+        JsBridge(Stage st) {
             this.stage = st;
         }
 
-        public void closeForm(){
+        public void closeForm() {
             this.stage.close();
         }
 
-        public void maxForm(){
-            if (this.isMax){
+        public void maxForm() {
+            if (this.isMax) {
                 this.stage.setX(oriX);
                 this.stage.setY(oriY);
                 this.stage.setWidth(oriWidth);
                 this.stage.setHeight(oriHeight);
                 this.isMax = false;
-            }
-            else{
+            } else {
                 this.oriX = this.stage.getX();
                 this.oriY = this.stage.getY();
                 this.oriWidth = this.stage.getWidth();
@@ -68,19 +73,33 @@ public class MainForm extends Application {
                 this.stage.setHeight(primaryScreenBounds.getHeight());
                 this.isMax = true;
             }
-            win.call("setState",this.isMax ? "max" : "nor");
+            win.call("setState", this.isMax ? "max" : "nor");
         }
 
-        public void minForm(){
+        public void minForm() {
             this.stage.setIconified(true);
         }
 
-        public void dragEnable(){
+        public void dragEnable() {
             this.mouseDragFlag = true;
         }
 
-        public void dragDisable(){
+        public void dragDisable() {
             this.mouseDragFlag = false;
+        }
+
+        public String getLocalText(String p){
+            //./views/header.vue
+            String defaultURL = System.getProperty("user.dir");
+            System.out.println(defaultURL);
+            Path path = Paths.get(defaultURL, "html", p.substring(2));
+            try{
+                return FileUtil.readString(path.toFile());
+            }
+            catch (Exception ex){
+                System.out.println(path.toString());
+                return "";
+            }
         }
     }
 
@@ -99,6 +118,7 @@ public class MainForm extends Application {
         webView.setMinHeight(670);
         webView.setStyle("-fx-background:rgba(0,0,0,0);");
         final WebEngine webEngine = webView.getEngine();
+        System.out.println(webEngine.getUserAgent());
         webEngine.load(defaultURL);
         Scene scene = new Scene(webView);
         scene.setFill(null);
@@ -110,23 +130,28 @@ public class MainForm extends Application {
         primaryStage.getIcons().add(new Image(MainForm.class.getClassLoader().getResourceAsStream("64.png")));
         primaryStage.getIcons().add(new Image(MainForm.class.getClassLoader().getResourceAsStream("100.png")));
         jsBridge = new JsBridge(primaryStage);
+
         webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
-            if (newState == Worker.State.SUCCEEDED) {
+            if (webEngine.getLoadWorker().getException() != null) {
+                String errorMsg = webEngine.getLoadWorker().getException().toString();
+                System.out.println("webView getException: " + errorMsg);
+            }
+            if (newState == SUCCEEDED) {
                 win = (JSObject) webEngine.executeScript("window");
                 win.setMember("iMusic", jsBridge);
             }
+            else if (newState == FAILED) {
+                System.out.println("webEngine state = FAILED");
+            }
         });
-
-        webEngine.getLoadWorker().exceptionProperty().addListener((ov, t, t1) -> System.out.println("Received exception: "+t1.getMessage()));
 
         webEngine.documentProperty().addListener((ov, oldState, newState) -> {
             try {
                 Field f = webEngine.getClass().getDeclaredField("page");
                 f.setAccessible(true);
-                com.sun.webkit.WebPage page = (com.sun.webkit.WebPage)f.get(webEngine);
+                com.sun.webkit.WebPage page = (com.sun.webkit.WebPage) f.get(webEngine);
                 page.setBackgroundColor((new java.awt.Color(0, 0, 0, 0)).getRGB());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -139,13 +164,12 @@ public class MainForm extends Application {
 
         webView.setOnMouseDragged((MouseEvent event) -> {
             //if (jsBridge.mouseDragFlag && !jsBridge.isMax){
-            if (jsBridge.mouseDragFlag){
+            if (jsBridge.mouseDragFlag) {
                 event.consume();
                 primaryStage.setX(event.getScreenX() - xOffset);
                 if (event.getScreenY() - yOffset < 0) {
                     primaryStage.setY(0);
-                }
-                else {
+                } else {
                     primaryStage.setY(event.getScreenY() - yOffset);
                 }
             }
