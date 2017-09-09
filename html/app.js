@@ -9,7 +9,8 @@ requirejs.config({
         "base64": './lib/base64/base64.min'
     },
     shim: {
-        "Vue": {exports: "Vue"}
+        "vue": {exports: "Vue"},
+        "vue-resource": ["vue"],
     }
 });
 

@@ -1,33 +1,21 @@
 package com.itwusun.music;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import jodd.io.FileUtil;
-import netscape.javascript.*;
+import netscape.javascript.JSObject;
 
-import java.io.File;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.rmi.server.ExportException;
-
-import static javafx.concurrent.Worker.State.FAILED;
-import static javafx.concurrent.Worker.State.SUCCEEDED;
 
 public class MainForm extends Application {
 
@@ -41,6 +29,7 @@ public class MainForm extends Application {
         private Stage stage;
         private boolean mouseDragFlag = false;
         private boolean isMax = false;
+        private boolean isInit = false;
         private double oriX = 0;
         private double oriY = 0;
         private double oriWidth = 0;
@@ -88,11 +77,14 @@ public class MainForm extends Application {
             this.mouseDragFlag = false;
         }
 
+        public void log(String text){
+            System.out.println(text);
+        }
+
         public String getLocalText(String p){
-            //./views/header.vue
             String defaultURL = System.getProperty("user.dir");
-            System.out.println(defaultURL);
             Path path = Paths.get(defaultURL, "html", p.substring(2));
+            System.out.println(path.toString());
             try{
                 return FileUtil.readString(path.toFile());
             }
@@ -111,9 +103,9 @@ public class MainForm extends Application {
 
     private void init(Stage primaryStage) {
         String defaultURL = System.getProperty("user.dir");
-        System.out.println(defaultURL);
         Path path = Paths.get(defaultURL, "html", "index.html");
         defaultURL = "file:///" + path.toString();
+        System.out.println(defaultURL);
         webView.setMinWidth(1120);
         webView.setMinHeight(670);
         webView.setStyle("-fx-background:rgba(0,0,0,0);");
@@ -132,16 +124,14 @@ public class MainForm extends Application {
         jsBridge = new JsBridge(primaryStage);
 
         webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
-            if (webEngine.getLoadWorker().getException() != null) {
-                String errorMsg = webEngine.getLoadWorker().getException().toString();
-                System.out.println("webView getException: " + errorMsg);
-            }
-            if (newState == SUCCEEDED) {
+            if (!jsBridge.isInit){
+                jsBridge.isInit = true;
                 win = (JSObject) webEngine.executeScript("window");
                 win.setMember("iMusic", jsBridge);
-            }
-            else if (newState == FAILED) {
-                System.out.println("webEngine state = FAILED");
+                webEngine.executeScript("console.log = function(message)\n" +
+                        "{\n" +
+                        "    iMusic.log(message);\n" +
+                        "};");
             }
         });
 

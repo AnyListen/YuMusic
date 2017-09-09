@@ -3,6 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/YuMusic_jar</output-path>
     <root id="archive" name="YuMusic.jar">
       <element id="module-output" name="YuMusic" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jodd-all-3.9.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
