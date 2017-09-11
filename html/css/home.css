@@ -206,6 +206,37 @@ body{
     height: 65px;
 }
 
+.play-control{
+    float: right;line-height:65px;text-align: right;vertical-align: middle;
+}
+
+.play-control i{
+    font-size: 20px;
+    width: 30px;text-align: center;cursor: pointer;
+}
+
+.play-control i:hover{
+    color: #333;
+}
+
+.play-control .ivu-slider-button-wrap{
+    top:-5px;
+}
+
+.ivu-slider-button-dragging,.ivu-slider-button:hover {
+    border-color: #FE5E00;
+    -ms-transform: scale(1.2);
+    transform: scale(1.2)
+}
+
+.ivu-slider-button:hover {
+    cursor: pointer;
+}
+
+.ivu-slider-button-dragging,.ivu-slider-button-dragging:hover {
+    cursor: pointer
+}
+
 .ivu-menu-vertical .ivu-menu-item-group-title{
     height: 36px;
     line-height: 36px;
@@ -232,3 +263,6 @@ body{
     background: #ECECEC;
     color: #000;
 }
+
+
+

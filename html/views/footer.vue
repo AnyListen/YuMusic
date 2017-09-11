@@ -16,12 +16,32 @@
                 </div>
             </div>
 
-            <div class="play-control" style="float: right;">
-                <div style="line-height: 18px;display:inline-block;position: absolute;right: 10px;">
+            <div class="play-control">
+                <div style="line-height: 18px;display:inline-block;position: absolute;right: 15px;">
                     <span>{{end}}</span>
                 </div>
-            </div>
 
+                <div style="display: inline-block;margin: 0 5px;">
+                    <i class="iconfont icon-yinleliebiao btn-playlist">
+
+                    </i>
+                    <span style="font-size: 12px;margin-left: -7px;">25</span>
+                </div>
+
+                <span style="margin: 0 6px;">
+                    <i class="iconfont icon-LQ_" style="font-size: 22px;"></i>
+                </span>
+
+                <span @click="crtPlayMode++;crtPlayMode%=3">
+                    <i :class="playModeStr"></i>
+                </span>
+                <span @click="volume > 0 ? (volume = 0) : (volume = lastVolume);">
+                    <i :class="volumeStr"></i>
+                </span>
+                <div style="display: inline-block;width: 120px;height: 65px;vertical-align: middle;">
+                    <Slider v-model="volume" :tip-format="nullFormat" style="padding: 11px 16px 11px 2px;"></Slider>
+                </div>
+            </div>
             <div class="player-controls">
                 <a class="jp-previous" @click="prevSong">
                     <i class="ivu-icon ivu-icon-ios-skipbackward"></i>
@@ -39,7 +59,7 @@
         </div>
         <audio @canplay="audioInit" id="player" ref="player"
                preload="auto" @progress="initBuffer"
-               @ended="ended" @error="errorLoad" style="display: none" :src="crtSong.CopyUrl" controls></audio>
+               @ended="ended" @error="errorLoad" style="display: none" :src="playLink" controls></audio>
     </div>
 
 </template>
@@ -53,8 +73,11 @@
             data: function() {
                 return {
                     myPlaylist: [],
+                    playModeStr: "ivu-icon ivu-icon-arrow-swap",
                     progress: 0,
-                    volume: 100,
+                    volume: 98,
+                    lastVolume:98,
+                    volumeStr: "ivu-icon ivu-icon-android-volume-up",
                     playIndex: -1,
                     crtPlayMode: 0,
                     play: false,
@@ -64,6 +87,7 @@
                     update: '',
                     drag: false,
                     listShow: false,
+                    playLink: "",
                     crtSong: {
                         SongId: "34183385",
                         SongName: "The road",
@@ -90,12 +114,6 @@
                         LrcUrl: "http://itwusun.com/files/music/wy_320_34183385.lrc?sign=93a7e10af1114c987eeef9596b3be0c8",
                         TrcUrl: "http://itwusun.com/files/music/wy_320_34183385.trc?sign=2846a934e45eab5c97eb1f825c349904",
                         KrcUrl: "http://itwusun.com/files/music/wy_320_34183385.krc?sign=067c125b69311abee7f9c7bcaabb6809",
-                        MvId: "0",
-                        MvHdUrl: "",
-                        MvLdUrl: "",
-                        Language: "",
-                        Company: "",
-                        Year: "",
                         Disc: 1,
                         TrackNum: 1,
                         Type: "wy"
@@ -114,7 +132,6 @@
                 this.$http.jsonp(url).then(function (resp) {
                     this.myPlaylist = resp.data;
                     if(this.myPlaylist.length > 0){
-                        this.crtSong = this.myPlaylist[0];
                         this.playIndex = 0;
                     }
                 }).catch(function (resp) {
@@ -122,6 +139,9 @@
                 });
             },
             methods: {
+                nullFormat : function () {
+                    return null;
+                },
                 initPlayer: function() {
                     this.$refs.timeBar.style.width = 0;
                     this.$refs.timeBuffer.style.width = 0;
@@ -144,7 +164,7 @@
                     this.$refs.timeBar.style.width = currentTime*100.0/this.max + "%";
                 },
                 playMusic: function () {
-                    if (!this.crtSong.CopyUrl) {
+                    if (this.playLink.toLowerCase().indexOf("http") < 0) {
                         return;
                     }
                     this.update = setInterval(this.getCurrent, 1000 / 200);
@@ -165,7 +185,7 @@
                 errorLoad: function () {
                     this.$refs.player.pause();
                     this.play = false;
-                    log("播放失败!");
+                    console.log("播放失败!");
                 },
                 setShow: function (show) {
                     this.listShow = show;
@@ -200,9 +220,7 @@
                             }
                             break;
                     }
-                    this.$refs.player.pause();
-                    this.crtSong = this.myPlaylist[this.playIndex];
-                    setTimeout(this.playMusic,1000);
+                    this.play = true;
                 },
                 prevSong: function () {
                     let len = this.myPlaylist.length;
@@ -221,9 +239,7 @@
                             this.playIndex = Math.floor(Math.random() * len);
                             break;
                     }
-                    this.$refs.player.pause();
-                    this.crtSong = this.myPlaylist[this.playIndex];
-                    setTimeout(this.playMusic,1000);
+                    this.play = true;
                 }
             },
             watch: {
@@ -232,8 +248,47 @@
                         this.current = Vue.options.filters.timeToStr(newValue);
                     }
                 },
-                volume: function (newValue) {
+                volume: function (newValue, oldValue) {
+                    this.lastVolume = oldValue;
+                    if(newValue === 0){
+                        this.volumeStr = "ivu-icon ivu-icon-android-volume-off";
+                    }
+                    if(oldValue === 0 && newValue > 0){
+                        this.volumeStr = "ivu-icon ivu-icon-android-volume-up";
+                    }
                     this.$refs.player.volume = newValue / 100;
+                },
+                playIndex:function (newValue, oldValue) {
+                    if(newValue !== oldValue){
+                        if(newValue >=0 && this.myPlaylist.length-1){
+                            this.$refs.player.pause();
+                            this.crtSong = this.myPlaylist[newValue];
+                            if(this.play){
+                                setTimeout(this.playMusic,1000);
+                            }
+                        }
+                    }
+                },
+                crtSong: function (newVal) {
+                    let tmpLink = newVal.CopyUrl;
+                    if(newVal.SqUrl.indexOf('http') >= 0) {
+                        tmpLink = newVal.SqUrl;
+                    }
+                    else if(newVal.HqUrl.indexOf('http') >= 0) {
+                        tmpLink = newVal.HqUrl;
+                    }
+                    this.playLink = tmpLink;
+                },
+                crtPlayMode: function (newVal) {
+                    if(newVal === 0){
+                        this.playModeStr = "ivu-icon ivu-icon-arrow-swap";
+                    }
+                    else if(newVal === 1){
+                        this.playModeStr = "ivu-icon ivu-icon-shuffle";
+                    }
+                    else if(newVal === 2){
+                        this.playModeStr = "ivu-icon ivu-icon-loop";
+                    }
                 }
             }
         });
