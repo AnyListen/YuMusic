@@ -90,7 +90,7 @@ body{
     top: 58px;
     left: 0;
     bottom: 70px;
-    width: 240px !important;
+    width: 200px !important;
     overflow-y: auto;
     overflow-x: hidden;
     background: #f9f9f9;
@@ -111,11 +111,12 @@ body{
     display: block;
     position: absolute;
     top: 58px;
-    left: 240px;
+    left: 200px;
     bottom: 70px;
     right: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    background: #FAFAFA;
 }
 
 .ivu-menu-vertical.ivu-menu-light:after {
@@ -211,12 +212,13 @@ body{
 }
 
 .play-control i{
-    font-size: 20px;
+    font-size: 22px;
     width: 30px;text-align: center;cursor: pointer;
 }
 
-.play-control i:hover{
-    color: #333;
+.play-control i:hover,.ic-list:hover{
+    cursor: pointer;
+    color: #8D97B0;
 }
 
 .play-control .ivu-slider-button-wrap{
@@ -244,25 +246,82 @@ body{
     color: #7D7D7D;
 }
 
-.ivu-menu-submenu-title{
+#navLeft .ivu-menu-submenu-title{
     padding: 8px !important;
     color: #7D7D7D;
 }
 
-.ivu-menu-submenu-title:hover{
+#navLeft .ivu-menu-submenu-title:hover{
     background: none !important;
 }
 
-.ivu-menu-item{
+#navLeft .ivu-menu-item-selected{
+    background: #ECECEC !important;
+    color: #FE5E00 !important;
+}
+
+#navLeft .ivu-menu-item{
     padding: 6px 22px !important;
     font-size: 14px;
     color: #5C5C5C;
 }
 
-.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
-    background: #ECECEC;
-    color: #000;
+#navLeft .playlist .ivu-menu-item{
+    line-height: 19px;
 }
 
+#ui-content .ivu-menu-item{
+    padding: 3px 2px!important;
+    margin-left: 18px;
+    font-size: 14px;
+}
+
+#ui-content .ivu-menu-horizontal{
+    height: 40px;
+    line-height: 40px;
+}
+
+#ui-content .ivu-tabs.ivu-tabs-card>.ivu-tabs-bar .ivu-tabs-tab{
+    border-radius: 0;
+}
+
+#ui-content .ivu-tabs-nav-scroll{
+    padding-left: 30px;
+}
+
+#ui-content .search-info{
+    padding:20px 30px;
+    font-size: 14px;
+}
+
+#ui-content .ivu-tabs.ivu-tabs-card>.ivu-tabs-bar .ivu-tabs-tab{
+    background: #FFFFFF;
+}
+
+#ui-content .ivu-tabs.ivu-tabs-card>.ivu-tabs-bar .ivu-tabs-tab:hover{
+    color: #333;
+    background: #F2F2F2;
+}
+
+#ui-content .ivu-tabs.ivu-tabs-card>.ivu-tabs-bar .ivu-tabs-tab-active{
+    background: #8D97B0 !important;
+    color: #FFFFFF !important;
+}
+
+#ui-content .ivu-tabs-nav-container{
+    border-bottom: 1px solid #8D97B0;
+}
+
+#ui-content .ivu-tabs.ivu-tabs-card>.ivu-tabs-bar .ivu-tabs-tab{
+    padding: 5px 30px;
+}
+
+.ic-list{
+    display: inline-block;margin: 0 5px;
+}
+
+.ivu-table-small td{
+    height: 30px;
+}
 
 

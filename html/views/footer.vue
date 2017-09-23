@@ -21,15 +21,13 @@
                     <span>{{end}}</span>
                 </div>
 
-                <div style="display: inline-block;margin: 0 5px;">
-                    <i class="iconfont icon-yinleliebiao btn-playlist">
-
-                    </i>
+                <div class="ic-list">
+                    <i class="iconfont icon-yinleliebiao btn-playlist"></i>
                     <span style="font-size: 12px;margin-left: -7px;">25</span>
                 </div>
 
-                <span style="margin: 0 6px;">
-                    <i class="iconfont icon-LQ_" style="font-size: 22px;"></i>
+                <span style="margin: 0 6px;" @click="qualityMode++;qualityMode%=3">
+                    <i :class="qualityStr"></i>
                 </span>
 
                 <span @click="crtPlayMode++;crtPlayMode%=3">
@@ -39,7 +37,7 @@
                     <i :class="volumeStr"></i>
                 </span>
                 <div style="display: inline-block;width: 120px;height: 65px;vertical-align: middle;">
-                    <Slider v-model="volume" :tip-format="nullFormat" style="padding: 11px 16px 11px 2px;"></Slider>
+                    <Slider v-model="volume" :tip-format="nullFormat" style="padding: 10px 16px 11px 2px;"></Slider>
                 </div>
             </div>
             <div class="player-controls">
@@ -70,6 +68,9 @@
 
         return Vue.component("v-footer", {
             template: template,
+            properties:{
+
+            },
             data: function() {
                 return {
                     myPlaylist: [],
@@ -78,6 +79,8 @@
                     volume: 98,
                     lastVolume:98,
                     volumeStr: "ivu-icon ivu-icon-android-volume-up",
+                    qualityStr: "iconfont icon-hq16",
+                    qualityMode: 1,
                     playIndex: -1,
                     crtPlayMode: 0,
                     play: false,
@@ -119,10 +122,10 @@
                         Type: "wy"
                     },
                     search:{
-                        keyword: "Noicybino",
+                        keyword: "Rune Foshaug",
                         size: 50,
                         page: 1,
-                        type: "wy"
+                        type: "xm"
                     }
                 };
             },
@@ -288,6 +291,17 @@
                     }
                     else if(newVal === 2){
                         this.playModeStr = "ivu-icon ivu-icon-loop";
+                    }
+                },
+                qualityMode: function (newVal) {
+                    if(newVal === 0){
+                        this.qualityStr = "iconfont icon-LQ_";
+                    }
+                    else if(newVal === 1){
+                        this.qualityStr = "iconfont icon-hq16";
+                    }
+                    else if(newVal === 2){
+                        this.qualityStr = "iconfont icon-sq16";
                     }
                 }
             }

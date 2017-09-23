@@ -106,7 +106,7 @@ public class MainForm extends Application {
         Path path = Paths.get(defaultURL, "html", "index.html");
         defaultURL = "file:///" + path.toString();
         System.out.println(defaultURL);
-        webView.setMinWidth(1120);
+        webView.setMinWidth(1020);
         webView.setMinHeight(670);
         webView.setStyle("-fx-background:rgba(0,0,0,0);");
         final WebEngine webEngine = webView.getEngine();
