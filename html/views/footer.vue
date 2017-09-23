@@ -63,8 +63,7 @@
 </template>
 
 <script>
-    define(["vue","vue-resource"], function(Vue,VueResource) {
-        Vue.use(VueResource);
+    define(["vue"], function(Vue) {
 
         return Vue.component("v-footer", {
             template: template,
@@ -131,15 +130,15 @@
             },
             mounted: function() {
                 this.initPlayer();
-                let url = "https://itwusun.com/api/music/search?sign=50d4dc8552623f10422f030ffb5ffd0d&k=" + encodeURIComponent(this.search.keyword) + "&s=" + this.search.size + "&p=" + this.search.page + "&t=" + this.search.type;
-                this.$http.jsonp(url).then(function (resp) {
-                    this.myPlaylist = resp.data;
-                    if(this.myPlaylist.length > 0){
-                        this.playIndex = 0;
-                    }
-                }).catch(function (resp) {
-                    console.log(resp.data);
-                });
+//                let url = "https://itwusun.com/api/music/search?sign=50d4dc8552623f10422f030ffb5ffd0d&k=" + encodeURIComponent(this.search.keyword) + "&s=" + this.search.size + "&p=" + this.search.page + "&t=" + this.search.type;
+//                this.$http.jsonp(url).then(function (resp) {
+//                    this.myPlaylist = resp.data;
+//                    if(this.myPlaylist.length > 0){
+//                        this.playIndex = 0;
+//                    }
+//                }).catch(function (resp) {
+//                    console.log(resp.data);
+//                });
             },
             methods: {
                 nullFormat : function () {

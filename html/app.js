@@ -9,14 +9,14 @@ requirejs.config({
         "base64": './lib/base64/base64.min'
     },
     shim: {
-        "vue": {exports: "Vue"},
-        "vue-resource": ["vue"],
+        "vue": {exports: "Vue"}
     }
 });
 
-require(["vue", "iview", "vue-router"], function(Vue,iview,VueRouter){
+require(["vue", "iview", "vue-router", "vue-resource"], function(Vue,iview,VueRouter,VueResource){
     Vue.use(iview);
     Vue.use(VueRouter);
+    Vue.use(VueResource);
 
     Vue.filter('durationToTime', value => {
         let min = Number.parseInt(value / (60 * 1000), 10) + '';
@@ -64,13 +64,11 @@ require(["vue", "iview", "vue-router"], function(Vue,iview,VueRouter){
     };
 
     let router = new VueRouter({routes: [
-        { path: "/search" , component: asyncComp("vuejs!./views/components/search")},
+        { path: "/search", name : "search" , component: asyncComp("vuejs!./views/components/search")},
         { path: "/html" , component: asyncComp("vuejs!/demo/component.html")},
         { path: "/vue"  , component: asyncComp("vuejs!/demo/component")},
         { path: "/async", component: asyncComp("vuejs!/demo/async")},
     ]});
-
-    // Vue.component('v-playlist', asyncComp("vuejs!./views/components/resultlist"));
 
     new Vue({
         data: {
@@ -88,7 +86,7 @@ require(["vue", "iview", "vue-router"], function(Vue,iview,VueRouter){
         }
     });
 
-    router.push({ path: '/search', query: {
+    router.push({ name: 'search', params: {
         keyword: "虫师",
         size: 50,
         page: 1,

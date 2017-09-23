@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    define(["vue","vue-resource"], function(Vue) {
+    define(["vue"], function(Vue) {
 
         let asyncComp = function(componentName) {
             return function(resolve) {
@@ -29,10 +29,10 @@
             template: template,
             data: function() {
                 return {
-                    keyword: "Rune Foshaug",
-                    size: 50,
-                    page: 1,
-                    type: "xm",
+                    keyword: this.$route.params.keyword,
+                    size: this.$route.params.size,
+                    page: this.$route.params.page,
+                    type: this.$route.params.type,
                     searchResult: []
                 };
             },

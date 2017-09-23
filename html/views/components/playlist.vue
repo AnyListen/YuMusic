@@ -14,16 +14,21 @@
                     showHeader: false,
                     columns:[
                         {
-                            type: 'selection',width: 60,align: 'center'
+                            type: 'selection',
+                            width: 60,
+                            align: 'center'
                         },
                         {
-                            title: '曲名',key: 'SongName'
+                            title: '曲名',
+                            key: 'SongName'
                         },
                         {
-                            title: '艺术家',key: 'ArtistName'
+                            title: '艺术家',
+                            key: 'ArtistName'
                         },
                         {
-                            title: '专辑',key: 'AlbumArtist'
+                            title: '专辑',
+                            key: 'AlbumArtist'
                         }
                     ]
                 };
