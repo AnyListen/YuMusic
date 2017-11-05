@@ -9,10 +9,22 @@
                 <div style="display: inline-block">
                     <img style="width: 65px;height: 65px;" :src="crtSong.SmallPic"/>
                 </div>
-                <div style="display: inline-block;height: 65px;vertical-align: top;padding-left: 10px;">
-                    <div style="line-height: 18px"><span>{{current}}</span></div>
-                    <div style="font-size: 16px;color: #333F48;line-height: 26px;">{{crtSong.SongName}}</div>
-                    <div style="font-size: 12px;color: #333F48;line-height: 20px;">{{crtSong.ArtistName}}</div>
+                <div style="display: inline-block;height: 65px;vertical-align: top;padding-left: 10px;width: 80%;">
+                    <div style="line-height: 18px">
+                        <span>
+                            {{current}}
+                        </span>
+                    </div>
+                    <div style="font-size: 16px; color: rgb(51, 63, 72); line-height: 26px;width: 100%;overflow: hidden;height:26px;text-overflow: ellipsis;">
+                        <span>
+                            {{crtSong.SongName}}
+                        </span>
+                    </div>
+                    <div style="font-size: 12px;color: #333F48;line-height: width: 100%;overflow: hidden;height:20px;text-overflow: ellipsis;">
+                        <span>
+                            {{crtSong.ArtistName}}
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -64,7 +76,6 @@
 
 <script>
     define(["vue"], function(Vue) {
-
         return Vue.component("v-footer", {
             template: template,
             properties:{
@@ -119,28 +130,18 @@
                         Disc: 1,
                         TrackNum: 1,
                         Type: "wy"
-                    },
-                    search:{
-                        keyword: "Rune Foshaug",
-                        size: 50,
-                        page: 1,
-                        type: "xm"
                     }
                 };
             },
             mounted: function() {
                 this.initPlayer();
-//                let url = "https://itwusun.com/api/music/search?sign=50d4dc8552623f10422f030ffb5ffd0d&k=" + encodeURIComponent(this.search.keyword) + "&s=" + this.search.size + "&p=" + this.search.page + "&t=" + this.search.type;
-//                this.$http.jsonp(url).then(function (resp) {
-//                    this.myPlaylist = resp.data;
-//                    if(this.myPlaylist.length > 0){
-//                        this.playIndex = 0;
-//                    }
-//                }).catch(function (resp) {
-//                    console.log(resp.data);
-//                });
+                this.$root.$on('play-song', this.setSong);
             },
             methods: {
+                setSong: function (song) {
+                    this.crtSong = song;
+                    setTimeout(this.playMusic,1000);
+                },
                 nullFormat : function () {
                     return null;
                 },

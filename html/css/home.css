@@ -42,6 +42,12 @@ body{
     background-color: #FFFFFF;
 }
 
+.fish-logo {
+    width: 150px;
+    height: 24px;
+    margin: 16px 16px;
+}
+
 #ui-sys-bar {
     width: 100%;
     height: 58px;
@@ -324,4 +330,29 @@ body{
     height: 30px;
 }
 
+#search-content .ivu-tabs-bar{
+    margin-bottom: 0;
+}
+
+#search-content{
+    overflow-x: hidden;
+}
+
+.playlist{
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.demo-spin-icon-load{
+    animation: ani-demo-spin 1s linear infinite;
+}
+@keyframes ani-demo-spin {
+    from { transform: rotate(0deg);}
+    50%  { transform: rotate(180deg);}
+    to   { transform: rotate(360deg);}
+}
+.demo-spin-col{
+    height: 100px;
+    position: relative;
+    border: 1px solid #eee;
+}
 

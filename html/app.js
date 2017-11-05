@@ -5,6 +5,7 @@ requirejs.config({
         'iview': './lib/iview/iview.min',
         'vue-router': './lib/vue/vue-router.min',
         "vue-resource": './lib/vue/vue-resource.min',
+        "vuex": './lib/vue/vuex.min',
         "vuejs": "./lib/require/require-vuejs.min",
         "base64": './lib/base64/base64.min'
     },
@@ -87,7 +88,7 @@ require(["vue", "iview", "vue-router", "vue-resource"], function(Vue,iview,VueRo
     });
 
     router.push({ name: 'search', params: {
-        keyword: "虫师",
+        keyword: "华晨宇",
         size: 50,
         page: 1,
         type: "xm"
